@@ -1,0 +1,15 @@
+== A pastiche of packaging
+=== or, understanding npm with style, elan, and verve
+
+A quick intro to packaging in npm:
+
+. Package.json
+. Registry JSON
+. Making a package
+. Where things live
+. Ripping apart packages
+. Questions
+
+== Building
+
+Use the `ninja` or `samu` build system (I use Sqmurai) to generate an HTML file from the `presentation.md` file
