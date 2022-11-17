@@ -35,8 +35,8 @@
 
 # key take aways
 
-1. Packages are: `package.json` + "stuff" (code/complete garbage/whatever) + an install location
-1. Registries are: a collection of package metadata + tarballs
+1. packages are: `package.json` + "stuff" (code/complete garbage/whatever) + an install location
+1. registries are: a collection of package metadata + tarballs
 1. Lots and lots of footguns
 
 ---
@@ -58,7 +58,7 @@
 
 ---
 
-# Background
+# background
 ## deep dive into npm
 
 - GitHub owns NPM
@@ -68,7 +68,7 @@
 
 ---
 
-# Background
+# background
 ## normal attacker TTPs and where to find them
 
 - so what *do* actors normally do on npm (and package registries more generally)?
@@ -79,7 +79,7 @@
 
 ---
 
-# Background
+# background
 ## normal attacker TTPs and where to find them
 ### so it's easy to find them, right?
 
@@ -92,7 +92,7 @@
 
 ---
 
-# Background
+# background
 ## tooling in the existing space
 
 - we all know Dependency Checkers
@@ -104,7 +104,7 @@
 
 ---
 
-# Background
+# background
 ## tooling in the existing space
 
 - what do we *most* care about with packages?
@@ -119,7 +119,7 @@
 
 ---
 
-# Background
+# background
 ## tooling in the existing space
 
 - OSSGadget: https://github.com/microsoft/OSSGadget
@@ -135,7 +135,7 @@
 
 ---
 
-# Packages
+# packages
 
 - so with all that said...
 - what the heck even *are* packages?
@@ -149,7 +149,7 @@
 
 ---
 
-# Packages
+# packages
 
 At their core, packages are just:
 
@@ -162,7 +162,7 @@ At their core, packages are just:
 
 ---
 
-# Packages: _package.json_
+# packages: _package.json_
 
 Simplest:
 
@@ -176,7 +176,7 @@ Simplest:
 
 ---
 
-# Packages: more normal
+# packages: more normal
 
 ```
 {
@@ -193,7 +193,7 @@ Simplest:
 
 ---
 
-# Packages: wait a minute...
+# packages: wait a minute...
 
 - that's correct
 - **NOTHING MATTERS**
@@ -204,7 +204,7 @@ Simplest:
 
 ---
 
-# Packages: three major types
+# packages: three major types
 
 1. Unscoped packages: `express`
 1. Scoped packages: `@woocommerce/e2e-environment` (scope: woocommerce, package: e2e-environment)
@@ -212,7 +212,7 @@ Simplest:
 
 ---
 
-# Packages: contents
+# packages: contents
 
 ```
 [lojikil@lojikils-MBP](~/Code/levenshtein-reason/node_modules)
@@ -233,7 +233,7 @@ bsb: a /usr/bin/env node script text executable, ASCII text
 
 ---
 
-# Packages: content agnostic
+# packages: content agnostic
 
 - npm doesn't _really_ care what's in them
   - bs-platform has lots of stuff
@@ -244,7 +244,7 @@ bsb: a /usr/bin/env node script text executable, ASCII text
 
 ---
 
-# Packages: install location
+# packages: install location
 
 - known install location?
 
@@ -252,7 +252,7 @@ bsb: a /usr/bin/env node script text executable, ASCII text
 
 ---
 
-# Packages: install location
+# packages: install location
 
 in order, npm will try:
 
@@ -276,7 +276,7 @@ _from https://github.com/npm/cli/blob/d6c651c050634a89f25846340a440dfb49755f82/l
 
 ---
 
-# Packages: key take aways
+# packages: key take aways
 
 - packages are just `package.json` + cruft
 - _generally_ installed via tarballs & a registry 
@@ -286,7 +286,7 @@ _from https://github.com/npm/cli/blob/d6c651c050634a89f25846340a440dfb49755f82/l
 
 ---
 
-# Registries
+# registries
 
 - technically: implements "CommonJS Compliant Package Registry specification"
 - specifically: a webserver (generally) that returns package information
@@ -297,7 +297,7 @@ _from https://github.com/npm/cli/blob/d6c651c050634a89f25846340a440dfb49755f82/l
 
 ---
 
-# Registries: registry JSON
+# registries: registry JSON
 
 - registries return JSON
 - registry JSON is: per-version `package.json` combined with additional metadata
@@ -359,7 +359,7 @@ _from https://github.com/npm/cli/blob/d6c651c050634a89f25846340a440dfb49755f82/l
 
 ---
 
-# Registries: interesting entries
+# registries: interesting entries
 
 - `versions` contains a per-version (based on the `version` string in our `package.json`) copy of the same data
 - we leak the user's email address (this was a Bounty submission already this week...)
@@ -374,7 +374,7 @@ _from https://github.com/npm/cli/blob/d6c651c050634a89f25846340a440dfb49755f82/l
 
 ---
 
-# Registries: tarballs
+# registries: tarballs
 
 ```
 [lojikil@lojikils-MBP](~/Code/pastiche-npm/garbage)
@@ -390,7 +390,7 @@ x package/README.md
 
 ---
 
-# Registries: naming is magic
+# registries: naming is magic
 
 - like on GitHub, users can name things whatever they wany
 - this leads to fun bounty submissions:
@@ -400,7 +400,7 @@ x package/README.md
 
 ---
 
-# Registries: take aways
+# registries: take aways
 
 - registries are just a location to hold names + metadata + tarballs
 - uses JSON extensively, which is mostly the same data + enrichment from `package.json`
@@ -411,13 +411,13 @@ x package/README.md
 
 ---
 
-# Tying it all together
+# tying it all together
 
 ![package graph](img/packagegraph.png)
 
 ---
 
-# Package Lifecycle
+# package lifecycle
 
 - very simple lifecycle:
 1. login to npm: `npm adduser`
@@ -429,7 +429,7 @@ x package/README.md
 
 ---
 
-# Package Lifecycle: publishing
+# package lifecycle: publishing
 
 ```
 [lojikil@lojikils-MBP](~/Code/pastiche-npm/var)
@@ -455,7 +455,7 @@ npm notice
 
 ---
 
-# Package Lifecycle: hashes & signatures
+# package lifecycle: hashes & signatures
 
 - `shasum` is literally just the SHA1SUM of the tarball
 - integrity is the fingerprint of the package after it's been signed by npm
@@ -470,7 +470,7 @@ npm notice
 
 ---
 
-# Package Lifecycle: installing
+# package lifecycle: installing
 
 ```
 % npm i testpackagepasticheclass
@@ -495,7 +495,7 @@ found 0 vulnerabilities
 
 ---
 
-# Package Lifecycle: the whole shebang
+# package lifecycle: the whole shebang
 
 all the manual steps we've done previously, rolled into one command:
 
@@ -509,7 +509,7 @@ all the manual steps we've done previously, rolled into one command:
 
 ---
 
-# What can go wrong
+# what can go wrong
 
 - everyone speels thinks gud
 - no one every mistypes anything
@@ -517,7 +517,7 @@ all the manual steps we've done previously, rolled into one command:
 
 ---
 
-# What can go wrong: names are footgun
+# what can go wrong: names are footgun
 
 let's look back at our `package.json`:
 
@@ -537,7 +537,7 @@ let's look back at our `package.json`:
 
 ---
 
-# What can go wrong: names are footgun
+# what can go wrong: names are footgun
 
 - `package-lock.json` is a version lockfile
 - I must have accidentally typed `npm i p<tab>` and installed the **file name** as a _package_
@@ -547,7 +547,7 @@ let's look back at our `package.json`:
 
 ---
 
-# What can go wrong: names are a footgun
+# what can go wrong: names are a footgun
 
 - this has garnered some attention of late, with articles like https://www.bleepingcomputer.com/news/software/empty-npm-package-has-over-700-000-downloads-heres-why/
 - basically, lots of people accidentally type `npm i -`, and `-` (yes, just a single hyphen) is a package
@@ -556,7 +556,7 @@ let's look back at our `package.json`:
 
 ---
 
-# What can go: locations are a footgun
+# what can go: locations are a footgun
 
 - `@lojikil/foobar` is a scoped package
 - `lojikil/foobar` is a GitHub repo
@@ -567,7 +567,7 @@ let's look back at our `package.json`:
 
 ---
 
-# What can go wrong: malicious packages
+# what can go wrong: malicious packages
 
 ![a malicious preinstall](img/maliciouscode.png)
 
@@ -576,7 +576,7 @@ let's look back at our `package.json`:
 
 ---
 
-# What can go wrong: malicious packages
+# what can go wrong: malicious packages
 
 ```
 Python 2.7.16 (default, Jun  5 2020, 22:59:21)
@@ -592,7 +592,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 ---
 
-# What can go wrong: take aways
+# what can go wrong: take aways
 
 - no one mistypes anything ever, so it's fine
 - no one misunderstands myriad & complex install locations, so it's fine too
@@ -660,11 +660,11 @@ switch(RoseJSON.member("scripts", pkgsrc)) {
 
 # that's it
 
-## Thanks for coming!
+## thanks for coming!
 
 - Blathering: https://lojikil.github.io
 - Tooting: @lojikil@mastodon.social
 - Coding: https://github.com/lojikil
 - Tweeting: https://twitter.com/lojikil
 
-## Questions?
+## questions?
